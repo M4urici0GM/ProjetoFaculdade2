@@ -29,7 +29,7 @@
                                     <asp:LinkButton ID="editButton" runat="server" CommandName="editUser" CssClass="btn btn-outline-primary">
                                         <i class="fas fa-user-cog"></i> Editar
                                     </asp:LinkButton>
-                                    <asp:LinkButton ID="delButton" runat="server" CommandName="editUser" CssClass="btn btn-outline-danger">
+                                    <asp:LinkButton ID="delButton" runat="server" CommandName="deleteUser" CssClass="btn btn-outline-danger">
                                         <i class="fas fa-user-minus"></i> Excluir
                                     </asp:LinkButton>
                                 </ItemTemplate>

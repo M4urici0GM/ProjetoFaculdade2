@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Data.Entity.Core;
 using System.Security.Authentication;
 using System.Threading.Tasks;
 using System.Web.Configuration;
@@ -31,14 +32,17 @@ namespace ProjetoFaculdade2.App_Data
             }
         }
 
-        public async Task<User> GetUser(long id)
+        public async Task<User> GetUser(long? id)
         {
             using (_mySqlConnection)
             {
-                return await _mySqlConnection.QueryFirstOrDefaultAsync<User>(@"
+                User  currentUser =  await _mySqlConnection.QueryFirstOrDefaultAsync<User>(@"
                     SELECT * FROM Usuarios
                     WHERE
                         Id = @Id;", new { Id = id});
+                if (currentUser == null)
+                    throw new EntityNotFoundException();
+                return currentUser;
             }
         }
         
@@ -88,6 +92,37 @@ namespace ProjetoFaculdade2.App_Data
             }
         }
 
+        public async Task<User> DeletUser(long? id)
+        {
+            using (_mySqlConnection)
+            {
+                User currentUser = await GetUser(id);
+                if (currentUser == null)
+                    throw new EntityNotFoundException();
+                currentUser.Status = false;
+                return await UpdateUser(currentUser);
+            }
+        }
+
+
+        public async Task<User> UpdateUser(User user)
+        {
+            using (_mySqlConnection)
+            {
+                if (!user.Id.HasValue)
+                    throw new EntityException();
+                User currentUser = await GetUser(user.Id);
+                if (user.Password != null && user.Password != currentUser.Password)
+                    user.Password = BCrypt.Net.BCrypt.HashPassword(user.Password);
+                if (user.Password == null)
+                    user.Password = currentUser.Password;
+                await _mySqlConnection.ExecuteAsync(@"
+                    UPDATE Usuarios
+                    SET Login = @Login, Password = @Password, Status = @Status
+                    WHERE Id = @Id", user);
+                return user;
+            }
+        }
 
         public async  void SeedUserData()
         {
@@ -97,7 +132,7 @@ namespace ProjetoFaculdade2.App_Data
                 if (!rows.Equals(0))
                     return;
                 await _mySqlConnection.ExecuteAsync(@"
-                    INSERT INTO Usuarios() VALUES (0, 'admin@admin.com', @Password, true)
+                    INSERT INTO Usuarios() VALUES (1, 'admin@admin.com', @Password, true)
                 ", new
                 {
                     Password = BCrypt.Net.BCrypt.HashPassword("admin")

@@ -1,4 +1,4 @@
-﻿<%@ Page Title="Cadastrar Usuario" Language="C#" MasterPageFile="Admin.Master" Inherits="ProjetoFaculdade2.Views.NewUser" %>
+﻿<%@ Page Async="true" Title="Cadastrar Usuario" Language="C#" MasterPageFile="Admin.Master" Inherits="ProjetoFaculdade2.Views.NewUser" %>
 
 <asp:Content runat="server" ContentPlaceHolderID="bodyPlaceholder">
     <div class="container">

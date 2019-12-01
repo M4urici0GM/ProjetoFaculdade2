@@ -22,7 +22,6 @@ namespace ProjetoFaculdade2.Views
             }
         }
         
-        
         private async Task LoadData()
         {
             IEnumerable<User> users = await new UserContext().GetUsers();
@@ -35,9 +34,27 @@ namespace ProjetoFaculdade2.Views
             throw new System.NotImplementedException();
         }
 
-        protected void OnRowCommandEventHandler(object sender, GridViewCommandEventArgs e)
+        protected async void OnRowCommandEventHandler(object sender, GridViewCommandEventArgs e)
         {
-            throw new System.NotImplementedException();
+            GridViewRow gvRow = (GridViewRow) ((LinkButton) e.CommandSource).NamingContainer;
+            var value = userGridView.DataKeys[gvRow.RowIndex]?.Value;
+            if (value != null)
+            {
+                long userId = (long) value;
+
+                if (e.CommandName.Equals("deleteUser"))
+                {
+                    User currentUser = await new UserContext().DeletUser(userId);
+                    if (currentUser.Id.HasValue)
+                    {
+                        ClientScript.RegisterStartupScript(this.GetType(), "missingFields", "<script> Swal.fire({type: 'success', title: 'Cadastrar usuario', text: 'Usuario cadastrado com sucesso!'}).then(() => location.href = '"+ GetRouteUrl("users")  +"'); </script>");
+                    }
+                    else
+                    {
+                        ClientScript.RegisterStartupScript(this.GetType(), "missingFields", "<script> Swal.fire({type: 'success', title: 'Excluir usuario', text: 'Usuario excluido com sucesso!'}).then(() => location.href = '"+ GetRouteUrl("users")  +"'); </script>");
+                    }
+                }
+            }
         }
     }
 }
