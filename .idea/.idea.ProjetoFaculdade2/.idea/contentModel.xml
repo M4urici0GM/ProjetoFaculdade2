@@ -7,6 +7,10 @@
       <e p="App_Data" t="Include">
         <e p="ClientContext.cs" t="Include" />
         <e p="Database.cs" t="Include" />
+        <e p="Exceptions" t="Include">
+          <e p="EntityAlreadyExists.cs" t="Include" />
+          <e p="EntityNotFoundException.cs" t="Include" />
+        </e>
         <e p="MovieContext.cs" t="Include" />
         <e p="UserContext.cs" t="Include" />
       </e>
@@ -62,7 +66,23 @@
         <e p="jquery.validate.unobtrusive.min.js" t="Include" />
         <e p="modernizr-2.8.3.js" t="Include" />
       </e>
-      <e p="Views" t="Include" />
+      <e p="Views" t="Include">
+        <e p="Admin.Master" t="Include" />
+        <e p="Admin.Master.cs" t="Include" />
+        <e p="Admin.Master.designer.cs" t="Include" />
+        <e p="Index.aspx" t="Include" />
+        <e p="Index.aspx.cs" t="Include" />
+        <e p="Index.aspx.designer.cs" t="Include" />
+        <e p="Login.aspx" t="Include" />
+        <e p="Login.aspx.cs" t="Include" />
+        <e p="Login.aspx.designer.cs" t="Include" />
+        <e p="NewUser.aspx" t="Include" />
+        <e p="NewUser.aspx.cs" t="Include" />
+        <e p="NewUser.aspx.designer.cs" t="Include" />
+        <e p="Users.aspx" t="Include" />
+        <e p="Users.aspx.cs" t="Include" />
+        <e p="Users.aspx.designer.cs" t="Include" />
+      </e>
       <e p="Web.config" t="Include" />
       <e p="Web.Debug.config" t="Include" />
       <e p="Web.Release.config" t="Include" />

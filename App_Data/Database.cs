@@ -22,6 +22,7 @@ namespace ProjetoFaculdade2.App_Data
                 Console.WriteLine(exception);
             }
         }
+        
         public MySqlConnection GetConnection() => this._mySqlConnection;
         public static Database GetInstance() => new Database();
     }
